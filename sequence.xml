@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="seq_type_service" model="ir.sequence.type">
+            <field name="name">Service No</field>
+            <field name="code">service.no</field>
+        </record>
+
+        <record id="seq_service_no" model="ir.sequence">
+            <field name="name">Service No</field>
+            <field name="code">service.no</field>
+            <field name="company_id" eval="None"/>
+            <field name="prefix">%(y)s%(month)s%(day)s</field>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="seq_type_pay" model="ir.sequence.type">
+            <field name="name">Pay No</field>
+            <field name="code">pay.no</field>
+        </record>
+
+        <record id="seq_pay_no" model="ir.sequence">
+            <field name="name">Pay No</field>
+            <field name="code">pay.no</field>
+            <field name="company_id" eval="None"/>
+            <field name="prefix">%(y)s%(month)s%(day)s</field>
+            <field name="padding">4</field>
+        </record>
+
+    </data>
+</openerp>

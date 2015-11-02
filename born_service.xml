@@ -1,0 +1,582 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<record id="view_born_content" model="ir.ui.view">
+			<field name="name">born.content.form</field>
+            <field name="model">born.content</field>
+            <field name="arch" type="xml">
+            	<form string="content" version="7.0">
+            		<header>
+                   	 	<button name="draft_to_done" string="发布"  type="object" class="oe_highlight" states="draft" style="float:left"  groups="born_service.group_born_service_manager"/>
+                        <button name="done_to_cancel" string="取消发布"  type="object" class="oe_highlight" states="done"  style="float:left" groups="born_service.group_born_service_manager"/>
+                    	<button name="cancel_to_draft" string="置为草稿"  type="object" class="oe_highlight" states="cancel"  style="float:left" groups="born_service.group_born_service_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
+            		</header>
+            		<sheet>
+            			<div class="oe_left" style="width: 500px;">
+                            <field name="file_name" invisible="True"/>
+                            <field name="image" filename="file_name" widget="image" class="oe_avatar oe_left"/>
+                            <div class="oe_title" style="width: 390px;">
+                                <h1>
+                                <field name="name" class="oe_inline"/>
+                                </h1>
+                            </div>
+                       	</div>
+                        <group>
+                            <group>
+                                <field name="category_id" />
+                                <field name="type" required="1" />
+                                <field name="sequence"/>
+                                <field name="flow"></field>
+                            </group>
+                            <group></group>
+                        </group>
+                       	<field name="content" widget="html" ></field>
+	            	</sheet>
+            	</form>
+            </field>
+        </record>
+
+        <record id="filter_born_content" model="ir.ui.view">
+            <field name="name">born.content.Search</field>
+            <field name="model">born.content</field>
+            <field name="arch" type="xml">
+                <search string="名称">
+                    <field name="name" string="文章" filter_domain="[('name','ilike',self)]"/>
+                    <field name="category_id" string="分类" filter_domain="[('category_id','ilike',self)]"/>
+                    <filter string="审核通过" domain="[('state','=','done' )]"/>
+                    <filter string="草稿"  domain="[('state','=', 'draft')]"></filter>
+                    <filter string="取消" domain="[('state','=', 'cancel')]"></filter>
+                    <group  expand='0' string='分组'>
+						<filter string="文章分类" context="{'group_by':'category_id'}" />
+						<filter string="状态" context="{'group_by':'state'}" />
+                        <filter string="文章类型" context="{'group_by':'type'}" />
+                    </group>
+                    <group expand="1" string="日期分组">
+                    	<filter string="按年查看" context="{'group_by':'create_date:year'}"/>
+	                    <filter string="按季度查看" context="{'group_by':'create_date:quarter'}"/>
+	                    <filter string="按月查看" context="{'group_by':'create_date:month'}"/>
+	                    <filter string="按周查看" context="{'group_by':'create_date:week'}"/>
+	                    <filter string="按天查看" context="{'group_by':'create_date:day'}"/>
+                	</group>
+                </search>
+            </field>
+        </record>
+
+        <record id="born_content_tree" model="ir.ui.view">
+        	<field name="name">born.content.tree</field>
+            <field name="model">born.content</field>
+            <field name="arch" type="xml">
+           		<tree string="content">
+           			<field name="name"></field>
+					<field name="category_id"></field>
+                    <field name="type"></field>
+		         	<field name="state"></field>
+                    <field name="flow"></field>
+
+           		</tree>
+           	</field>
+        </record>
+
+        <record id="action_content" model="ir.actions.act_window">
+        	<field name="name">文章</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">born.content</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="born_content_tree"/>
+            <field name="search_view_id" ref="filter_born_content"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    	单击书写新的文章
+                </p>
+            </field>
+        </record>
+
+        <record id="view_content_category" model="ir.ui.view">
+        	<field name="name">content.category.form</field>
+            <field name="model">content.category</field>
+            <field name="arch" type="xml">
+            	<form>
+            		<sheet>
+            			<group>
+            				<field name="name"></field>
+            			</group>
+            		</sheet>
+            	</form>
+            </field>
+        </record>
+
+        <record id="content_category_tree" model="ir.ui.view">
+        	<field name="name">content.category.tree</field>
+            <field name="model">content.category</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+           		<tree string="category">
+           			<field name="name"></field>
+           		</tree>
+           	</field>
+        </record>
+
+        <record id="action_category" model="ir.actions.act_window">
+        	<field name="name">文章分类</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">content.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="content_category_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    	单击创建新的分类
+                </p>
+            </field>
+        </record>
+
+        <record id="view_born_service" model="ir.ui.view">
+        	<field name="name">born.service.form</field>
+            <field name="model">born.service</field>
+            <field name="arch" type="xml">
+            	<form>
+                    <header>
+                   	 	<button name="draft_to_done" string="发布"  type="object" class="oe_highlight" states="draft" style="float:left"  groups="born_service.group_born_service_manager"/>
+                        <button name="done_to_cancel" string="取消发布"  type="object" class="oe_highlight" states="done"  style="float:left" groups="born_service.group_born_service_manager"/>
+                        <button name="cancel_to_draft" string="置为草稿"  type="object" class="oe_highlight" states="cancel"  style="float:left" groups="born_service.group_born_service_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
+            		</header>
+
+            		<sheet>
+            			<div class="oe_left" style="width: 500px;">
+                            <field name="file_name" invisible="True"/>
+                            <field name="image" filename="file_name" widget="image" class="oe_avatar oe_left"/>
+                            <div class="oe_title" style="width: 390px;">
+                                <h1><field name="name" class="oe_inline" required="1"/>
+				<div class="h5" style="font-size:1px">(请上传尺寸为55*42的图片)</div>
+				</h1>
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="is_regiest"></field>
+                                <field name="regiest_url" invisible="1"></field>
+                                <field name="price" attrs="{'invisible':[('is_regiest','=',False)]}"></field>
+                                <field name="type" attrs="{'invisible':[('is_regiest','=',False)]}"></field>
+                                <field name="num"  attrs="{'invisible': ['|',('is_regiest','=',False),('type', '!=', 'num')]}"/>
+                                <field name="days"  attrs="{'invisible': ['|',('is_regiest','=',False),('type', '!=', 'days')]}"/>
+            			    </group>
+                            <group></group>
+                        </group>
+
+            			<group>
+            				<field name="introduction" required="1"></field>
+            				<field name="describe" required="1"></field>
+                            <field name="sequence"/>
+            			</group>
+
+            			<notebook>
+                            <page string="文章列表" >
+                                 <field name="contents_ids">
+                                    <tree string="Contents Ids">
+                                        <field name="name"  />
+                                        <field name="category_id"  />
+                                    </tree>
+                                </field>
+            				</page>
+            				<page string="已登记的商家">
+            					<field name="business_ids" >
+            						<tree string="商户">
+										<field name="name" ></field>
+										<field name="company_id" ></field>
+										<field name="customer_name" ></field>
+                                        <field name="phone" ></field>
+                                        <field name="employee_id"  ></field>
+										<field name="create_date" string="申请日期"></field>
+                                        <field name="expiration_date" ></field>
+										<field name="state" ></field>
+            						</tree>
+            					</field>
+            				</page>
+            			</notebook>
+            		</sheet>
+            	</form>
+            </field>
+        </record>
+
+        <record id="filter_born_service" model="ir.ui.view">
+            <field name="name">born.service.Search</field>
+            <field name="model">born.service</field>
+            <field name="arch" type="xml">
+                <search string="名称">
+                    <field name="name" string="服务" filter_domain="[('name','ilike',self)]"/>
+                    <field name="introduction" string="简介" filter_domain="[('introduction','ilike',self)]"/>
+                    <filter string="需要登记"   domain="[('is_regiest','=',True)]"/>
+                    <filter string="不需要登记"   domain="[('is_regiest','=', False)]"></filter>
+                    <group  expand='0' string='分组'>
+						<filter string="按年查看" context="{'group_by':'create_date:year'}" />
+						<filter string="按季度查看" context="{'group_by':'create_date:quarter'}" />
+						<filter string="按月查看" context="{'group_by':'create_date:month'}" />
+						<filter string="按周查看" context="{'group_by':'create_date:week'}" />
+						<filter string="按天查看" context="{'group_by':'create_date:day'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="born_service_tree" model="ir.ui.view">
+        	<field name="name">born.service.tree</field>
+            <field name="model">born.service</field>
+            <field name="arch" type="xml">
+           		<tree string="service">
+           			<field name="name"></field>
+					<field name="is_regiest" ></field>
+                    <field name="create_date" string="创建日期" ></field>
+                    <field name="state" ></field>
+           		</tree>
+           	</field>
+        </record>
+
+        <record id="action_service" model="ir.actions.act_window">
+        	<field name="name">服务</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">born.service</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="born_service_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    	单击创建新的服务
+                </p>
+            </field>
+        </record>
+
+        <record id="view_born_business_line" model="ir.ui.view">
+        	<field name="name">born.business.line.form</field>
+            <field name="model">born.business.line</field>
+            <field name="arch" type="xml">
+            	<form>
+            		<header>
+                   	 	<button name="regiest_pass"  style="float:left" string="审核通过" type="object" class="oe_highlight" states="draft"  groups="born_service.group_born_service_manager"/>
+                   	 	<button name="regiest_notpass" style="float:left" string="审核不通过" type="object" class="oe_highlight" states="draft"  groups="born_service.group_born_service_manager"/>
+                   	 	<button name="regiest_pay" style="float:left" string="登记为已付款" type="object" class="oe_highlight" states="done"  groups="born_service.group_born_service_manager"/>
+                   	 	<button name="regiest_gone" style="float:left" string="过期" type="object" class="oe_highlight" states="in"  groups="born_service.group_born_service_manager"/>
+                   	 	<button name="regiest_repay" style="float:left" string="续费" type="object" class="oe_highlight" states="gone"  groups="born_service.group_born_service_manager"/>
+                   	 	<button name="regiest_cancel" style="float:left" string="取消服务" type="object" class="oe_highlight" states="draft,done,in,gone,failed"  groups="born_service.group_born_service_manager"/>
+                    	<field name="state" widget="statusbar" statusbar_visible="draft,done,in,gone,failed,cancel"/>
+            		</header>
+            		<sheet>
+
+                        <div class="oe_title">
+                            <h1>
+                                <label string="服务号 "/>
+                                <field name="name" class="oe_inline" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="company_id"/>
+                                <field name="customer_name"/>
+                                <field name="phone"/>
+                                <field name="employee_id" />
+                            </group>
+                            <group>
+                                <field name="service_id"/>
+                                <field name="price"/>
+                                <field name="num"/>
+                                <field name="days"/>
+                                <field name="create_date" string="申请登记日期"/>
+                                <field name="approved_date" />
+                                <field name="expiration_date" />
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="服务履历">
+                                <field name="line_ids">
+                                    <tree string="Service  Lines" >
+                                        <field name="employee_id"/>
+                                        <field name="start_date"/>
+                                        <field name="end_date"/>
+                                        <field name="state"/>
+                                    </tree>
+
+                                </field>
+                            </page>
+                            <page string="付款履历">
+                                <field name="pay_ids">
+                                    <tree string="Pay  Lines" >
+                                        <field name="customer_name"/>
+                                        <field name="create_date" string="创建日期"/>
+                                        <field name="pay_method"/>
+                                        <field name="amount"/>
+                                        <field name="name"/>
+                                        <field name="account"/>
+                                        <field name="pay_date"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+            			<div>
+                            <field name="remark"/>
+                        </div>
+            		</sheet>
+            	</form>
+            </field>
+        </record>
+
+		<record id="filter_born_business_line" model="ir.ui.view">
+            <field name="name">born.business.line.Search</field>
+            <field name="model">born.business.line</field>
+            <field name="arch" type="xml">
+                <search string="名称">
+                    <group  expand='0' string='分组'>
+						<filter string="按年查看" context="{'group_by':'create_date:year'}" />
+						<filter string="按季度查看" context="{'group_by':'create_date:quarter'}" />
+						<filter string="按月查看" context="{'group_by':'create_date:month'}" />
+						<filter string="按周查看" context="{'group_by':'create_date:week'}" />
+						<filter string="按天查看" context="{'group_by':'create_date:day'}" />
+                    </group>
+                    <group  expand='1' string='分组'>
+						<filter string="公司" context="{'group_by':'company_id'}" />
+						<filter string="服务" context="{'group_by':'service_id'}" />
+                        <filter string="状态" context="{'group_by':'state'}" />
+                        <filter string="担当者" context="{'group_by':'employee_id'}" />
+                    </group>
+
+                    <field name="name" string="服务" filter_domain="[('name','ilike',self)]"/>
+                    <field name="customer_name" string="登记人" filter_domain="[('customer_name','ilike',self)]"/>
+                    <field name="phone" string="电话" filter_domain="[('phone','ilike',self)]"/>
+                    <field name="employee_id" />
+                    <field name="company_id" />
+
+                </search>
+            </field>
+        </record>
+
+        <record id="born_business_line_tree" model="ir.ui.view">
+        	<field name="name">born.business.line.tree</field>
+            <field name="model">born.business.line</field>
+            <field name="arch" type="xml">
+           		<tree string="business">
+                    <field name="name"></field>
+           			<field name="company_id"  ></field>
+           			<field name="customer_name"  ></field>
+					<field name="phone"></field>
+					<field name="service_id" ></field>
+                    <field name="approved_date"></field>
+					<field name="expiration_date" ></field>
+                    <field name="employee_id" ></field>
+                    <field name="state" ></field>
+           		</tree>
+           	</field>
+        </record>
+
+
+        <record id="action_business" model="ir.actions.act_window">
+        	<field name="name">登记的商户</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">born.business.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="born_business_line_tree"/>
+        </record>
+
+        <record id="view_born_service_record" model="ir.ui.view">
+        	<field name="name">born.service.record.form</field>
+            <field name="model">born.service.record</field>
+            <field name="arch" type="xml">
+            	<form>
+                    <header>
+                        <button name="draft_to_doing" string="开始处理"  type="object" class="oe_highlight" states="draft" style="float:left"  groups="born_service.group_born_service_manager"/>
+                        <button name="doing_to_success" string="处理成功"  type="object" class="oe_highlight" states="doing"  style="float:left" groups="born_service.group_born_service_manager"/>
+                        <button name="doing_to_faild" string="处理失败"  type="object" class="oe_highlight" states="doing"  style="float:left" groups="born_service.group_born_service_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,doing,success,faild"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="business_id" />
+                                <field name="company_id" readonly="1"/>
+                                <field name="employee_id" />
+                                <field name="start_date" />
+                                <field name="end_date" />
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="demand"/>
+                            <field name="result"/>
+                        </group>
+            		</sheet>
+            	</form>
+            </field>
+        </record>
+
+        <record id="filter_born_service_record" model="ir.ui.view">
+            <field name="name">born.service.record.Search</field>
+            <field name="model">born.service.record</field>
+            <field name="arch" type="xml">
+                <search string="名称">
+
+                    <group  expand='1' string='分组'>
+						<filter string="服务" context="{'group_by':'business_id'}" />
+						<filter string="担当者" context="{'group_by':'employee_id'}" />
+                        <filter string="状态" context="{'group_by':'state'}" />
+                    </group>
+
+                    <field name="business_id"/>
+                    <field name="employee_id" />
+                    <group  expand='0' string='分组'>
+						<filter string="按年查看" context="{'group_by':'create_date:year'}" />
+						<filter string="按季度查看" context="{'group_by':'create_date:quarter'}" />
+						<filter string="按月查看" context="{'group_by':'create_date:month'}" />
+						<filter string="按周查看" context="{'group_by':'create_date:week'}" />
+						<filter string="按天查看" context="{'group_by':'create_date:day'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="born_service_record_tree" model="ir.ui.view">
+        	<field name="name">born.service.record.tree</field>
+            <field name="model">born.service.record</field>
+            <field name="arch" type="xml">
+           		<tree string="service">
+                    <field name="company_id"/>
+           			<field name="business_id"></field>
+					<field name="employee_id"></field>
+                    <field name="create_date" string="创建日期" ></field>
+                    <field name="state" ></field>
+           		</tree>
+           	</field>
+        </record>
+
+        <record id="action_service_record" model="ir.actions.act_window">
+        	<field name="name">服务记录</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">born.service.record</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="born_service_record_tree"/>
+            <field name="search_view_id" ref="filter_born_service_record"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    	单击创建新的服务记录
+                </p>
+            </field>
+        </record>
+
+        <record id="view_born_pay_line" model="ir.ui.view">
+        	<field name="name">born.pay.line.form</field>
+            <field name="model">born.pay.line</field>
+            <field name="arch" type="xml">
+            	<form>
+                    <header>
+
+                        <button name="draft_to_done" string="付款完成"  type="object" class="oe_highlight" states="draft" style="float:left"  groups="born_service.group_born_service_manager"/>
+                        <button name="done_to_cancel" string="无效"  type="object" class="oe_highlight" states="done"  style="float:left" groups="born_service.group_born_service_manager"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <label string="流水号 "/>
+                                <field name="name" class="oe_inline" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="business_id" />
+                                <field name="company_id" readonly="1"/>
+                                <field name="customer_name" />
+                                <field name="create_date" string="创建日期"/>
+                            </group>
+                            <group>
+                                <field name="pay_method"/>
+                                <field name="amount"/>
+                                <field name="out_trade_no"/>
+                                <field name="account"/>
+                                <field name="pay_date"/>
+                            </group>
+                        </group>
+            		</sheet>
+            	</form>
+            </field>
+        </record>
+
+        <record id="filter_born_pay_line" model="ir.ui.view">
+            <field name="name">born.pay.line.Search</field>
+            <field name="model">born.pay.line</field>
+            <field name="arch" type="xml">
+                <search string="名称">
+
+                    <group  expand='1' string='分组'>
+						<filter string="服务" context="{'group_by':'business_id'}" />
+						<filter string="付款方式" context="{'group_by':'pay_method'}" />
+                        <filter string="状态" context="{'group_by':'state'}" />
+                    </group>
+
+                    <field name="name" />
+                    <field name="business_id"/>
+                    <field name="customer_name" />
+                    <field name="out_trade_no" />
+                    <field name="account" />
+
+                    <group  expand='0' string='分组'>
+						<filter string="按年查看" context="{'group_by':'create_date:year'}" />
+						<filter string="按季度查看" context="{'group_by':'create_date:quarter'}" />
+						<filter string="按月查看" context="{'group_by':'create_date:month'}" />
+						<filter string="按周查看" context="{'group_by':'create_date:week'}" />
+						<filter string="按天查看" context="{'group_by':'create_date:day'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="born_pay_line_tree" model="ir.ui.view">
+        	<field name="name">born.pay.line.tree</field>
+            <field name="model">born.pay.line</field>
+            <field name="arch" type="xml">
+           		<tree string="service">
+                    <field name="company_id"/>
+                    <field name="business_id"/>
+           			<field name="customer_name"/>
+                    <field name="create_date" string="创建日期"/>
+                    <field name="pay_method"/>
+                    <field name="amount"/>
+                    <field name="out_trade_no"/>
+                    <field name="name"/>
+                    <field name="account"/>
+                    <field name="state"/>
+           		</tree>
+           	</field>
+        </record>
+
+        <record id="action_born_pay_line" model="ir.actions.act_window">
+        	<field name="name">付款记录</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">born.pay.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="born_pay_line_tree"/>
+            <field name="search_view_id" ref="filter_born_pay_line"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    	单击创建新的付款记录
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem name="服务" id="service_one" sequence="90" parent="base.menu_administration" />
+        <menuitem name="文章" id="born_book_menu1" parent="service_one" action="action_content" sequence="1"/>
+        <menuitem name="文章分类" id="born_book_menu2" parent="service_one" action="action_category"  sequence="2"/>
+        <menuitem name="服务" id="born_service_menu1" parent="service_one" action="action_service" sequence="3"/>
+        <menuitem name="登记的商户" id="born_service_menu2" parent="service_one" action="action_business" sequence="4"/>
+        <menuitem name="服务记录" id="born_service_record" parent="service_one" action="action_service_record" sequence="5"/>
+        <menuitem name="付款记录" id="born_born_pay_line" parent="service_one" action="action_born_pay_line" sequence="6"/>
+
+    </data>
+</openerp>
