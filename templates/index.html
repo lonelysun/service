@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8" />
+    <title>index.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    This is my HTML page. <br>
+    <form action="/test/post">
+    	<input type="text" name="business" value="1" hidden>
+    	<input type="text" name="u_id" value="10" hidden>
+    	<input type="text" name="company_id" value="1" hidden>
+    	商家名称：<input type="text" name="name" value="{{ name }}"><br>
+    	申请人： <input type="text" name="regiest_name"><br>
+    	联系电话：<input type="tel" name="tel"><br>
+    	<input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

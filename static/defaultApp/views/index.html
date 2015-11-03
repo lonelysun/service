@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html ng-app="serviceApp" style="background-color: #FFFFFF;">
+<head>
+    <title>${company.name}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <link href="/born_service/static/src/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/born_service/static/src/css/font.css" rel="stylesheet" />
+    <link href="/born_service/static/src/css/app.min.css" rel="stylesheet" />
+    <link href="/born_service/static/src/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/born_service/static/src/css/styles.css" rel="stylesheet" />
+    <link href="/born_service/static/src/css/simple-line-icons.css" rel="stylesheet" />
+    <link href="/born_service/static/src/css/toaster.min.css" rel="stylesheet" />
+    <link href="/born_service/static/src/css/animations.css" rel="stylesheet" />
+
+</head>
+<body ng-cloak>
+
+    <div ng-controller="NavbarController as vm" ng-show="vm.getDisplayModel()=='block'" class="app-header navbar  ng-scope" >
+        <div class="footermenu btn-group  ng-scope">
+            <ul menu-highlighter highlight-class-name="active" style="width:80%;margin:0 auto;">
+                <li><a class="btn  bg-white text-info no-border" ng-href="/orders">已订购</a></li>
+                <li><a style="border:solid 2px #41adf3;" ng-href="/services">服务</a></li>
+                <li><a style="border-right:solid 2px #41adf3;border-top:solid 2px #41adf3;border-bottom:solid 2px #41adf3;" ng-href="/contents">动态信息</a></li>
+            </ul>
+        </div>
+	</div>
+
+	<!-- content -->
+    <div class="fade-in-up ng-scope" style="bottom: 0px;">
+        <div class="hbox hbox-auto-xs ng-scope">
+	    	<div ng-view style="position:relative;background-color: #ffffff;" id="ng-view" ></div>
+            <toaster-container toaster-options="{'position-class': 'toast-top-center', 'close-button':false}"></toaster-container>
+		</div>
+	</div>
+
+    <div wc-overlay wc-overlay-delay="30">
+        <i class="fa fa-spin fa-refresh fa-2x"></i>
+    </div>
+
+   <script src="/born_service/static/src/js/jquery.js"></script>
+
+    <!-- 3rd party libraries -->
+    <script src="/born_service/static/src/js/angular.min1.3.js"></script>
+    <script src="/born_service/static/src/js/angular-locale_zh.js"></script>
+
+    <script src="/born_service/static/src/js/angular-route1.3.min.js"></script>
+    <script src="/born_service/static/src/js/angular-animate1.3.min.js"></script>
+    <script src="/born_service/static/src/js/ui-bootstrap-tpls-0.13.0.min.js"></script>
+    <script src="/born_service/static/src/js/tweenMax.min.js"></script>
+    <script src="/born_service/static/src/js/breeze.min.js"></script>
+    <script src="/born_service/static/src/js/breeze.angular.js"></script>
+    <script src="/born_service/static/src/js/sanitize.js"></script>
+    <script src="/born_service/static/src/js/angular-touch.js"></script>
+    <script src="/born_service/static/src/js/ng-infinite-scroll.min.js"></script>
+    <script src="/born_service/static/defaultApp/wc.directives/directives/wcOverlay.js"></script>
+    <script src="/born_service/static/defaultApp/wc.directives/directives/menuHighlighter.js"></script>
+    <script src="/born_service/static/defaultApp/app.js"></script>
+    <script src="/born_service/static/defaultApp/animations/listAnimations.js"></script>
+    <script src="/born_service/static/defaultApp/directives/wcUnique.js"></script>
+    <script src="/born_service/static/defaultApp/services/config.js"></script>
+    <script src="/born_service/static/defaultApp/services/authService.js"></script>
+    <script src="/born_service/static/defaultApp/services/httpInterceptors.js"></script>
+    <script src="/born_service/static/defaultApp/services/dataService.js"></script>
+    <script src="/born_service/static/defaultApp/services/modalService.js"></script>
+    <script src="/born_service/static/defaultApp/services/shopService.js"></script>
+
+    <script src="/born_service/static/defaultApp/controllers/services/serviceController.js"></script>
+    <script src="/born_service/static/defaultApp/controllers/services/registerController.js"></script>
+    <script src="/born_service/static/defaultApp/controllers/orders/orderController.js"></script>
+    <script src="/born_service/static/defaultApp/controllers/contents/contentController.js"></script>
+
+    <script src="/born_service/static/defaultApp/controllers/navbarController.js"></script>
+
+  	<script src="/born_service/static/src/js/toaster.min.js"></script>
+</body>
+</html>
+
+
