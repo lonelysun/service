@@ -1,0 +1,63 @@
+﻿@charset "utf-8";
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+
+.footermenu {z-index: 900;background-color: #edf1f2;}
+.footermenu ul {
+	margin: 0px 50px;
+	padding:10px 0px;
+	display: block;
+	height: 55px;
+	display: -webkit-box;
+	display: box;
+	text-align: center;
+	-webkit-box-orient: horizontal;
+	padding: auto;
+	background-color: #edf1f2;
+
+}
+.footermenu ul li a img {
+	width: 24px;
+	height: 24px;
+}
+.footermenu ul li {
+	float: left;
+	width: 33.3%;
+	height: 35px;
+	position: static!important;
+	margin: 0;
+	border-radius: 0!important;
+	box-sizing: border-box;
+	box-shadow: none!important;
+	background: none;
+	list-style: none;
+
+}
+.footermenu ul li a {
+	position: relative;
+	height: 35px;
+	color: #0080fc;
+	font-size: 14px;
+	line-height: 35px;
+	text-align: center;
+	display: block;
+	text-decoration: none;
+	position: relative;
+
+
+}
+.footermenu ul li.active a {
+	background: #0080fc;
+	border-bottom: 0;
+	color:#FFFFFF;
+}
+
+.overlayContainer { display: none;}
+.overlayBackground { top:0px; left:0px; position:absolute; z-index:1000;height: 50px;width: 50px;opacity:0.1;}
+.overlayContent { position:absolute; line-height:60px; border-radius: 30px;  background:#dedede; opacity:0.3; height: 50px;width: 50px;z-index:1000;text-align:center;}
+
+
