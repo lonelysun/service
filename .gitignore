@@ -2,3 +2,4 @@
 *.py[cod]
 *$py.class
 static/defaultApp/views/tmp/index.html.py
+static/defaultApp/views/tmp/except.html.py
