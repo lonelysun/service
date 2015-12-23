@@ -1,0 +1,31 @@
+﻿ <div class="show-hide-animation"  style="margin-bottom: 0px;padding-bottom: 0px;">
+    <div id="infinite" infinite-scroll='vm.getServices()' infinite-scroll-parent="true"
+                    infinite-scroll-distance='1' infinite-scroll-disabled='vm.busy' >
+        <div class="panel no-border" style="margin-bottom: 0px;">
+            <ul class="alt">
+                <li ng-repeat="service in vm.services" class="list-group-item" style="padding:0px;border-bottom: 0px;">
+                    <div class="media" style="padding:10px 10px;">
+                        <span class="pull-left thumb "  style="width:65px;">
+                            <a href="#/services/{{service.id}}">
+                                <img data-ng-show="service.image==''" style="text-align:center;" src="/born_service/static/src/img/default_service.png" class="img">
+                                <img data-ng-show="service.image!=''" style="text-align:center;background:url(/born_service/static/description/load.gif)" ng-src="{{service.image}}" class="img">
+                            </a>
+                        </span>
+                        <a href="#/services/{{service.id}}">
+                            <div class="media-body">
+                                <div>
+                                    <span class="pull-right" style="">{{service.create_date}}</span>
+                                    <span style="color:#000;font-size:15px;display: block;overflow: hidden;text-overflow: ellipsis;">{{ service.name }}</span>
+                                </div>
+                                <span class="clear">
+                                    <small  style="color: #999;" data-ng-show="service.introduction != ''" class="text-muted" style="">{{service.introduction}}</small>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div style="height:60px; line-height: 60px;" ng-show="vm.busy" class="text-center" >正在加载...</div>

@@ -1,0 +1,31 @@
+<div class="show-hide-animation"  >
+    <div class="bg-light lter text-center  b-b wrapper-sm ng-scope" >
+      <span class="  ">{{ vm.service.name }}</span>
+    </div>
+    <div class="bg-light lter b-b wrapper-md ng-scope">
+        <small class="text-muted">{{vm.service.describe}}</small>
+        <div class="btn-group btn-group-justified m-t">
+             <a ng-show="vm.service.already_register==false" href="#/register/{{vm.service.id}}" class="btn btn-lg" style="background-color: #0080fc;color:#FFFFFF;">马上申请 (￥{{ vm.service.price }})</a>
+        </div>
+    </div>
+    <div class="panel no-border bg-light" data-ng-repeat="content in vm.service.contents" style="margin:0px;padding:0px;" >
+        <div class="media-body">
+            <ul class="alt"  style="margin: 20px" >
+                <li class="list-group-item no-border" style="margin:0px;padding:0px;">
+                    <a href="#/contents/{{content.id}}">
+                        <div class="media-body" >
+                            <div>
+                                <img data-ng-show="content.image!=''" style="text-align:center;" ng-src="{{content.image}}" class="img-full">
+                                <img data-ng-show="content.image==''" style="text-align:center;" src="/born_service/static/src/img/default_content.png" class="img-full">
+                            </div>
+                            <div class="clear" style="height: 50px;">
+                                <h4 style="margin:10px 10px 0px 10px;font-size:16px;">{{content.name}}<i class="fa fa-angle-right pull-right"></i></h4>
+                                <small style="color: #999;margin-left: 10px;">{{ content.create_date }}</small>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
